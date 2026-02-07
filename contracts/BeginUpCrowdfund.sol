@@ -56,4 +56,12 @@ contract BeginUpCrowdfund {
 
         emit ContributionReceived(_campaignId, msg.sender, msg.value, rewardAmount);
     }
+
+    function getAllCampaigns() public view returns (Campaign[] memory) {
+        Campaign[] memory allCampaigns = new Campaign[](campaignCount);
+        for (uint256 i = 1; i <= campaignCount; i++) {
+            allCampaigns[i - 1] = campaigns[i];
+        }
+        return allCampaigns;
+    }
 }
