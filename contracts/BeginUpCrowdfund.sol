@@ -1,12 +1,46 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
-interface IBeginUpCrowdfund {
+
+interface IBeginUpToken {
     function mint(address to, uint256 amount) external;
 }
 
 contract BeginUpCrowdfund {
+    struct Campaign {
+        string title;
+        uint256 goal;
+        uint256 deadline;
+        uint256 totalRaised;
+    }
+
+    IBeginUpToken public rewardToken;
+    uint256 public campaignCount;
     
+    mapping(uint256 => Campaign) public campaigns;
+    mapping(uint256 => mapping(address => uint256)) public contributions;
+
+    event CampaignCreated(uint256 id, string title, uint256 goal, uint256 deadline);
+    event ContributionReceived(uint256 id, address contributor, uint256 amount, uint256 rewardAmount);
+
+    constructor(address _tokenAddress) {
+        rewardToken = IBeginUpToken(_tokenAddress);
+    }
+
+    function createCampaign(string memory _title, uint256 _goal, uint256 _duration) public {
+        campaignCount++;
+        uint256 deadline = block.timestamp + _duration;
+        
+        campaigns[campaignCount] = Campaign({
+            title: _title,
+            goal: _goal,
+            deadline: deadline,
+            totalRaised: 0
+        });
+
+        emit CampaignCreated(campaignCount, _title, _goal, deadline);
+    }
+
     function contribute(uint256 _campaignId) public payable {
         Campaign storage campaign = campaigns[_campaignId];
 
@@ -16,10 +50,10 @@ contract BeginUpCrowdfund {
         campaign.totalRaised += msg.value;
         contributions[_campaignId][msg.sender] += msg.value;
 
-        uint256 rewardAmount = msg.value * 1000; // 1 ETH = 1000 tokens
-        rewartdToken.mint(msg.sender, rewardAmount);
+        uint256 rewardAmount = msg.value * 1000; 
 
-        emit ContributionReceived(_campaignId, msg.sender, msg.valuem, rewardAmount);
+        rewardToken.mint(msg.sender, rewardAmount);
 
+        emit ContributionReceived(_campaignId, msg.sender, msg.value, rewardAmount);
     }
 }
