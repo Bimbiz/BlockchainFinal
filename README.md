@@ -5,3 +5,15 @@ Before start make sure, that you have all the stuff that needs to run all of the
 ```shell
 npm install
 ```
+
+To check how it's works open two terminals and write
+
+In first
+```shell
+npx hardhat node
+```
+
+In second
+```shell
+npx hardhat run scripts/check-project.js --network localhost
+```
