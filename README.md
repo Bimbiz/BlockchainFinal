@@ -19,11 +19,15 @@ npx hardhat run scripts/check-project.js --network localhost
 ```
 
 To check the whole project
-
+```shell
 npx hardhat node
-
+```
+```shell
 npx hardhat ignition deploy ./ignition/modules/BeginUpModule.js --network localhost
-
+```
+```shell
 node server.js
-
+```
+```shell
 node seed.js //seed.js is example of project
+```
