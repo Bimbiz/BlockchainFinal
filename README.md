@@ -17,3 +17,13 @@ In second
 ```shell
 npx hardhat run scripts/check-project.js --network localhost
 ```
+
+To check the whole project
+
+npx hardhat node
+
+npx hardhat ignition deploy ./ignition/modules/BeginUpModule.js --network localhost
+
+node server.js
+
+node seed.js //seed.js is example of project
