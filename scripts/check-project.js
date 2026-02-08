@@ -1,8 +1,9 @@
 const hre = require("hardhat");
+require("dotenv").config();
 
 async function main() {
-  const TOKEN_ADDRESS = "0x5FbDB2315678afecb367f032d93F642f64180aa3"; 
-  const CROWDFUND_ADDRESS = "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512";
+  const TOKEN_ADDRESS = process.env.TOKEN_ADDRESS;
+  const CROWDFUND_ADDRESS = process.env.CROWDFUND_ADDRESS;
 
   const [deployer] = await hre.ethers.getSigners();
   console.log("Checking", deployer.address, "---");
