@@ -11,14 +11,14 @@ async function main() {
 
   const contract = new ethers.Contract(CROWDFUND_ADDRESS, ABI, signer);
 
-  console.log("Создаю тестовые проекты...");
+  console.log("Creating test projects...");
   const tx = await contract.createCampaign(
     "Cyberpunk RPG",
     ethers.parseEther("10"),
     3600,
   );
   await tx.wait();
-  console.log("✅ Проект создан! Теперь обнови страницу сайта.");
+  console.log("Project was successfully created!");
 }
 
 main();
